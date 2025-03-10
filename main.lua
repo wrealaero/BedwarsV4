@@ -1,5 +1,3 @@
---This watermark is used to delete the file if its cached, remove it to make the file persist after vape updates.
-
 repeat task.wait() until game:IsLoaded()
 if shared.vape then shared.vape:Uninject() end
 
@@ -37,9 +35,6 @@ local function downloadFile(path, func)
 		end)
 		if not suc or res == '404: Not Found' then
 			error(res)
-		end
-		if path:find('.lua') then
-			res = '--This watermark is used to delete the file if its cached, remove it to make the file persist after vape updates.\n'..res
 		end
 		writefile(path, res)
 	end
@@ -96,7 +91,6 @@ if not isfolder('newvape/assets/'..gui) then
 	makefolder('newvape/assets/'..gui)
 end
 vape = loadstring(downloadFile('newvape/guis/'..gui..'.lua'), 'gui')()
--- shared.vape = vape
 
 local XFunctions = loadstring(downloadFile('newvape/libraries/XFunctions.lua'), 'XFunctions')()
 XFunctions:SetGlobalData('XFunctions', XFunctions)
@@ -106,9 +100,9 @@ local PerformanceModule = loadstring(downloadFile('newvape/libraries/performance
 XFunctions:SetGlobalData('Performance', PerformanceModule)
 
 local utils_functions = loadstring(downloadFile('newvape/libraries/utils.lua'), 'Utils')()
-for i: (any), v: (...any) -> (...any) in utils_functions do --> sideloads all render global utility functions from libraries/utils.lua
+for i: (any), v: (...any) -> (...any) in utils_functions do
     getfenv()[i] = v;
-end;
+end
 
 getgenv().InfoNotification = function(title, msg, dur)
 	warn('info', tostring(title), tostring(msg), tostring(dur))
